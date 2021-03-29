@@ -6,20 +6,6 @@
 class BattleSystem
 {
     public:
-        BattleSystem(Person* p, Person* e)
-        {
-            player = p;
-            enemy = e;
-            turn = 0;
-        }
-
-        enum class AttackType
-        {
-            PHYSICAL,
-            MAGIC,
-            PSYCHIC
-        };
-
         enum class BattleResult
         {
             NotOver,
@@ -28,42 +14,30 @@ class BattleSystem
             Run
         };
 
-        void NextTurn()
-        {
-            playeraction += 3 + (player->GetAgility() * 0.05);
-            enemyaction += 3 + (enemy->GetAgility() * 0.05);
-            turn++;
-        }
-
-        int NextMove()
-        {            
-            int damage = 0;
-
-            if (CheckWhoIsTheAction())
-            {
-                attacker = player;
-                defender = enemy;
-                damage = Attack();
-                playeraction -= 3;
-            }
-            else
-            {
-                attacker = enemy;
-                defender = player;
-                damage = Attack();
-                enemyaction -= 3;
-            }
-
-            CheckIsGameOver();
-            return damage;
-        }
-
         BattleResult GetResult() const
         {
             return Result;
         }
-    
+
     protected:
+        enum class AttackType
+        {
+            PHYSICAL,
+            MAGIC,
+            PSYCHIC
+        };
+
+        enum class ActionType
+        {
+            RUN = 1,
+            ATTACK = 2,
+            SPECIAL_ATTACK = 3,
+            ITEM = 4,
+            // RTTE = 5, /* Run to the enemy */
+            // KAFTE = 6, /* Keep away from the enemy */
+            AWAIT = 5
+        };
+
         int playeraction = 0;
         int enemyaction = 0;
         Person* player;
@@ -74,18 +48,36 @@ class BattleSystem
         int turn;
         BattleResult Result = BattleResult::NotOver;
 
-        int Attack ()
+        BattleSystem(Person* p, Person* e)
         {
-            bool dodge = Dodge();
+            player = p;
+            enemy = e;
+            turn = 0;
+        }
 
-            if (!dodge)
+        
+
+        void NextTurn()
+        {
+            playeraction += 3 + (player->GetAgility() * 0.05);
+            enemyaction += 3 + (enemy->GetAgility() * 0.05);
+            turn++;
+        }
+
+        void NextMove()
+        {
+            if (CheckIsPlayerAction())
             {
-                int damage = CalcDamage(AttackType::PHYSICAL);
-                ApplyDamage(damage);
-                return damage;
+                isPlayerTurn = true;
+                attacker = player;
+                defender = enemy;
             }
-
-            return -1;
+            else
+            {
+                isPlayerTurn = false;
+                attacker = enemy;
+                defender = player;
+            }
         }
 
         bool Dodge()
@@ -137,7 +129,7 @@ class BattleSystem
             }
         }
 
-        bool CheckWhoIsTheAction()
+        bool CheckIsPlayerAction()
         {
             float playerinitiative = (rand() % 10);
             float enemyinitiative = (rand() % 10);
@@ -160,6 +152,57 @@ class BattleSystem
             else
             {
                 return false;
+            }
+        }
+
+        // ACTIONS HANDLERS
+        int Attack ()
+        {
+            bool dodge = Dodge();
+
+            if (!dodge)
+            {
+                int damage = CalcDamage(AttackType::PHYSICAL);
+                ApplyDamage(damage);
+                return damage;
+            }
+
+            return -1;
+        }
+
+        int SpecialAttack()
+        {
+            bool dodge = Dodge();
+
+            if (!dodge)
+            {
+                int damage = CalcDamage(AttackType::PHYSICAL);
+                ApplyDamage(damage);
+                return damage;
+            }
+
+            return -1;
+        }
+
+        void Run()
+        {
+            Result = BattleResult::Run;
+        }
+
+        void UseItem()
+        {
+            attacker->SetDamage(-16);
+        }
+
+        void RemoveActionPoint(int value)
+        {
+            if (isPlayerTurn)
+            {
+                playeraction -= value;
+            }
+            else
+            {
+                enemyaction -= value;
             }
         }
 };

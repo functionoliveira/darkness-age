@@ -128,11 +128,6 @@ class Person : public Body, public Attributes, public Background
             psychic += value;
         }
 
-        void SetHitpoints(int value)
-        {
-            
-        }
-
         void UpdateAttributesFromFamily ()
         {
             switch (GetFamily().GetEnumValue())
@@ -322,6 +317,7 @@ class Person : public Body, public Attributes, public Background
         void SetDamage(int value)
         {
             damage = damage + value;
+            if (damage < 0) damage = 0;
         }
 
     protected:

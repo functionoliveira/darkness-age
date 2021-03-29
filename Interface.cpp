@@ -139,13 +139,13 @@ class Interface
             Continue();
         }
 
-        char Continue(std::string text = "Press enter key to continue... ", bool showchoice = false)
+        int Continue(std::string text = "Press enter key to continue... ", bool showchoice = false)
         {
             char choice;
             PrintTextAndNewLine(text, 0);
             choice = getch();
             if (showchoice) std::cout << choice;
-            return choice;
+            return ((int)choice) - 48;
         }
 
         void CharInput(char &value)

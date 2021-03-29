@@ -24,9 +24,8 @@ class BattleSystemTest
 
             while (battle.GetResult() == BattleSystem::BattleResult::NotOver)
             {
-                battle.StartTurn();
+                battle.Start();
             }
-            
         }
 };
 
