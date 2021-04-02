@@ -32,11 +32,13 @@ class EquipmentTest : Interface
             NewLine();
             PrintTextAndNewLine("TESTE DE EQUIPAMENTO");
             Continue();
-            OneHandedSwordTest();
-            TwoHandedSwordTest();
-            LightArmorTest();
-            HeavyArmorTest();
-            ShieldTest();
+            // OneHandedSwordTest();
+            // TwoHandedSwordTest();
+            // LightArmorTest();
+            // HeavyArmorTest();
+            // ShieldTest();
+            TestEmptyInventoryInterface();
+            TestInventoryInterface();
         }
 
         void OneHandedSwordTest()
@@ -127,6 +129,33 @@ class EquipmentTest : Interface
             Continue();
             ClearScreen();
             PersonInterface::PrintPersonToken(human);
+        }
+
+        void TestEmptyInventoryInterface()
+        {
+            ClearScreen();
+            NewLine();
+            PrintTextAndNewLine("Inventario");
+            BackgroundEnumerator BCKG = BackgroundEnumerator::WARRIOR;
+            Person* human = new Human("John Snow", BCKG, BCKG, BCKG);
+            PersonInterface::PrintPersonInventory(human);
+            Continue();
+        }
+
+        void TestInventoryInterface()
+        {
+            ClearScreen();
+            NewLine();
+            PrintTextAndNewLine("Inventario");
+            BackgroundEnumerator BCKG = BackgroundEnumerator::WARRIOR;
+            Person* human = new Human("John Snow", BCKG, BCKG, BCKG);
+            map<Armor*, int> armors = GetMapHeavyArmor();
+            for(const auto& a : armors)
+            {
+                human->ArmorEquip(a.first);
+            }
+            PersonInterface::PrintPersonInventory(human);
+            // Continue();
         }
 };
 

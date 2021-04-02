@@ -1,5 +1,6 @@
 #include <map>
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -141,6 +142,48 @@ class PersonInterface : public Interface
             i.NewLine();
             i.PrintTextAndNewLine("---------------------------------------------------------------");
             i.Continue("Pressione qualquer tecla para sair...");
+        }
+
+        static void PrintPersonInventory(Person* person)
+        {
+            Interface i;
+            string head      = "     CABECA: " + person->GetHeadEquipName() + " " + person->GetHeadEquipBonus();
+            string chest     = "      PEITO: " + person->GetChestEquipName() + " " + person->GetChestEquipBonus();
+            string legs      = "       MAOS: " + person->GetLegsEquipName() + " " + person->GetLegsEquipBonus();
+            string boots     = "     PERNAS: " + person->GetBootsEquipName() + " " + person->GetBootsEquipBonus();
+            string hands     = "        PES: " + person->GetHandsEquipName() + " " + person->GetHandsEquipBonus();
+            string righthand = "MAO DIREITA: " + person->GetRightHandEquipName() + " " + person->GetRightHandEquipBonus();
+            string lefthand = "MAO ESQUERDA: " + person->GetLeftHandEquipName() + " " + person->GetLeftHandEquipBonus();
+
+            int lenghts[6] = { 
+                static_cast<int>(head.length()),
+                static_cast<int>(chest.length()),
+                static_cast<int>(legs.length()),
+                static_cast<int>(boots.length()),
+                static_cast<int>(hands.length()),
+                static_cast<int>(righthand.length())
+            };
+            int grater = lenghts[0];
+            for(int idx = 1; idx < 6; ++idx)
+            {
+                if(grater < lenghts[idx])
+                    grater = lenghts[idx];
+            }
+            i.NewLine();
+            i.PrintSumLine("", -1);
+            i.PrintSumLine("INVENTARIO", 45);
+            i.PrintSumLine("", -1);
+            i.PrintSumLine(i.FillWithWhitespace(head, grater), 8);
+            i.PrintSumLine(i.FillWithWhitespace(chest, grater), 8);
+            i.PrintSumLine(i.FillWithWhitespace(hands, grater), 8);
+            i.PrintSumLine(i.FillWithWhitespace(legs, grater), 8);
+            i.PrintSumLine(i.FillWithWhitespace(boots, grater), 8);
+            i.PrintSumLine("", -1);
+            i.PrintSumLine("", -1);
+            i.PrintSumLine(i.FillWithWhitespace(righthand, grater), 8);
+            i.PrintSumLine(i.FillWithWhitespace(lefthand, grater), 8);
+            i.PrintSumLine("", -1);
+            i.PrintSumLine("", -1);
         }
 
         void UpgradeAttributes(Person* person)

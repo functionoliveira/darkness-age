@@ -2,6 +2,7 @@
 #include <conio.h>
 #include <list>
 #include <map>
+#include <windows.h>
 
 using namespace std;
 
@@ -10,6 +11,44 @@ class Interface
     public:
         void NewLine()
         {
+            cout << endl << "  ";
+        }
+
+        void Color(int color)
+        {
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
+        }
+
+        string FillWithWhitespace(string text, int lenght)
+        {
+            int end = lenght - text.length();
+            for(int i = 0; i < end; i++)
+            {
+                text += " ";
+            }
+            return text;
+        }
+
+        void PrintSumLine(string text, int index=0)
+        {
+            int textlenght = text.length();
+            int linelenght = textlenght > 0 ? 96 - textlenght : 100;
+
+            for(int i = 0; i < linelenght; i++)
+            {
+                if (index == i)
+                {
+                    Color(2);
+                    cout << "{ " << text << " }";
+                    Color(7);
+                    cout << "+";
+                }
+                else
+                {
+                    cout << "+";
+                }
+            }
+
             cout << endl << "  ";
         }
 
