@@ -5,6 +5,15 @@
 #include "../RaceEnumerator.cpp"
 #include "../BackgroundEnumerator.cpp"
 #include "../Background.cpp"
+#include "../equipments/EquipmentEnum.cpp"
+#include "../equipments/Equipment.cpp"
+#include "../equipments/Weapon.cpp"
+#include "../equipments/Armor.cpp"
+#include "../equipments/ArmorFactory.cpp"
+#include "../equipments/Shield.cpp"
+#include "../equipments/ShieldFactory.cpp"
+#include "../equipments/swords/Sword.cpp"
+#include "../equipments/WeaponFactory.cpp"
 #include "../Person.cpp"
 #include "../races/Human.cpp"
 #include "../races/Orc.cpp"
@@ -12,10 +21,11 @@
 #include "../races/Dwarf.cpp"
 #include "../races/Elf.cpp"
 #include "../monsters/Wolf.cpp"
-#include "../Interface.cpp"
+#include "../factories/PersonFactory.cpp"
 #include "Action.cpp"
-#include "BattleSystem.cpp"
-#include "BattleSystemInterface.cpp"
+#include "../interface/Interface.cpp"
+#include "../interface/PersonInterface.cpp"
+#include "../interface/BattleSystemInterface.cpp"
 
 
 class BattleSystemTest
@@ -23,7 +33,7 @@ class BattleSystemTest
     public:
         void Run()
         {
-            Interface interface;
+            Interface itf;
             Person* player = new Human("Jogador Humano", BackgroundEnumerator::WARRIOR, BackgroundEnumerator::WARRIOR, BackgroundEnumerator::WARRIOR);
             Person* ai = new Orc("AI Orc", BackgroundEnumerator::WARRIOR, BackgroundEnumerator::WARRIOR, BackgroundEnumerator::WARRIOR);
             Person* brocks = new Brocks("AI Brocks", BackgroundEnumerator::WARRIOR, BackgroundEnumerator::WARRIOR, BackgroundEnumerator::WARRIOR);
@@ -31,10 +41,10 @@ class BattleSystemTest
             Person* elf = new Elf("AI Elf", BackgroundEnumerator::WARRIOR, BackgroundEnumerator::WARRIOR, BackgroundEnumerator::WARRIOR);
             Person* wolf = new Wolf(1);
 
-            interface.ClearScreen();
-            interface.PrintPersonToken(player);
-            interface.ClearScreen();
-            interface.PrintPersonToken(wolf);
+            itf.ClearScreen();
+            PersonInterface::PrintPersonToken(player);
+            itf.ClearScreen();
+            PersonInterface::PrintPersonToken(wolf);
 
             BattleSystemInterface battle = BattleSystemInterface(player, wolf);
 

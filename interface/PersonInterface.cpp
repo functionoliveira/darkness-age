@@ -147,13 +147,13 @@ class PersonInterface : public Interface
         static void PrintPersonInventory(Person* person)
         {
             Interface i;
-            string head      = "     CABECA: " + person->GetHeadEquipName() + " " + person->GetHeadEquipBonus();
-            string chest     = "      PEITO: " + person->GetChestEquipName() + " " + person->GetChestEquipBonus();
-            string legs      = "       MAOS: " + person->GetLegsEquipName() + " " + person->GetLegsEquipBonus();
-            string boots     = "     PERNAS: " + person->GetBootsEquipName() + " " + person->GetBootsEquipBonus();
-            string hands     = "        PES: " + person->GetHandsEquipName() + " " + person->GetHandsEquipBonus();
-            string righthand = "MAO DIREITA: " + person->GetRightHandEquipName() + " " + person->GetRightHandEquipBonus();
-            string lefthand = "MAO ESQUERDA: " + person->GetLeftHandEquipName() + " " + person->GetLeftHandEquipBonus();
+            string head      = "      CABECA: " + person->GetHeadEquipName() + " " + person->GetHeadEquipBonus();
+            string chest     = "       PEITO: " + person->GetChestEquipName() + " " + person->GetChestEquipBonus();
+            string legs      = "        MAOS: " + person->GetLegsEquipName() + " " + person->GetLegsEquipBonus();
+            string boots     = "      PERNAS: " + person->GetBootsEquipName() + " " + person->GetBootsEquipBonus();
+            string hands     = "         PES: " + person->GetHandsEquipName() + " " + person->GetHandsEquipBonus();
+            string righthand = " MAO DIREITA: " + person->GetRightHandEquipName() + " " + person->GetRightHandEquipBonus();
+            string lefthand  = "MAO ESQUERDA: " + person->GetLeftHandEquipName() + " " + person->GetLeftHandEquipBonus();
 
             int lenghts[6] = { 
                 static_cast<int>(head.length()),

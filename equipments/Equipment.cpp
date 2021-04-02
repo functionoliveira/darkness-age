@@ -7,6 +7,7 @@ class Equipment
     private:
         string name;
         EquipmentEnum type;
+        int key;
     public:
         Equipment() {}
         Equipment(string n, EquipmentEnum t)
@@ -38,5 +39,13 @@ class Equipment
                    type == EquipmentEnum::FOOTS_ARMOR ||
                    type == EquipmentEnum::ARMS_ARMOR ||
                    type == EquipmentEnum::HANDS_ARMOR;
+        }
+        void SetKey(int k)
+        {
+            key = k;
+        }
+        int GetKey()
+        {
+            return key;
         }
 };

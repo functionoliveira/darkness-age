@@ -12,11 +12,9 @@ class ArenaInterface : Interface, public Arena
         char input = '0';
         map<int, string> menu = {
             { 1, "Sair" },
-            { 2, "Mochila" },
-            { 3, "Mercado" },
-            { 4, "Personagem" },
-            { 5, "Batalhar" },
-            { 6, "Descansar" }
+            { 2, "Personagem" },
+            { 3, "Batalhar" },
+            { 4, "Descansar" }
         };
     public:
         void Start()
@@ -108,15 +106,15 @@ class ArenaInterface : Interface, public Arena
             case '1':
                 PrintTextAndNewLine("Sair");
                 break;
-            case '2':
+            case '8':
                 PrintTextAndNewLine("Mochila");
                 Battle();
                 break;
-            case '3':
+            case '9':
                 PrintTextAndNewLine("Mercado");
                 Battle();
                 break;
-            case '4':
+            case '2':
                 PrintTextAndNewLine("Personagem");
                 ClearScreen();
                 if(player->GetLevelBuff() < player->GetLevel()) 
@@ -126,18 +124,20 @@ class ArenaInterface : Interface, public Arena
                 }
                 PersonInterface::PrintPersonToken(player);
                 break;
-            case '5':
+            case '3':
                 PrintTextAndNewLine("Batalhar");
                 Battle();
                 break;
-            case '6':
+            case '4':
                 PrintTextAndNewLine("Descansar");
+                Color(2);
                 ClearScreen();
                 NewLine();
                 PrintTextAndNewLine("Voce se deita ao lado da fogueira para descansar");
                 player->Rest();
                 PrintTextAndNewLine("Ao raiar do dia voce sente seu corpo revigorado");
                 Continue("esta pronto para os novos desafios...");
+                Color(7);
                 break;
             default:
                 PrintTextAndNewLine("Batalhar");

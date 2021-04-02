@@ -9,9 +9,12 @@ using namespace std;
 class Interface
 {
     public:
-        void NewLine()
+        void NewLine(int qty=1)
         {
-            cout << endl << "  ";
+            for(int i = 0; i < qty; i++)
+            {
+                cout << endl << "  ";
+            }
         }
 
         void Color(int color)
@@ -29,18 +32,18 @@ class Interface
             return text;
         }
 
-        void PrintSumLine(string text, int index=0)
+        void PrintSumLine(string text, int index=0, int linesize=100, int txtcolor=2, int linecolor=7)
         {
             int textlenght = text.length();
-            int linelenght = textlenght > 0 ? 96 - textlenght : 100;
-
+            int linelenght = textlenght > 0 ? (linesize - 4) - textlenght : linesize;
+            Color(linecolor);
             for(int i = 0; i < linelenght; i++)
             {
                 if (index == i)
                 {
-                    Color(2);
+                    Color(txtcolor);
                     cout << "{ " << text << " }";
-                    Color(7);
+                    Color(linecolor);
                     cout << "+";
                 }
                 else
@@ -159,10 +162,40 @@ class Interface
             Continue();
         }
 
+        int PrintPersonLifeBarWithoutFormat(Person* p)
+        {
+            string lifebar = "";
+            int life = ceil(p->GetHitpointsPercent() * 20);
+            Color(5);
+            lifebar += p->GetName() + " [";
+            cout << p->GetName() + " [";
+            for(int i = 0; i < 20; i++)
+            {
+                if (life < 10) { Color(12); }
+                else { Color(2); }
+
+                if (i < life)
+                {
+                    lifebar += "#";
+                    cout << "#";
+                }
+                else
+                {
+                    lifebar += " ";
+                    cout << " ";
+                }
+            }
+            lifebar += "]";
+            Color(5);
+            cout << "]";
+            Color(7);
+            return lifebar.length();
+        }
+
         void PrintLife(Person* p)
         {
             int life = ceil(p->GetHitpointsPercent() * 20);
-            PrintTextAndNewLine(p->GetName() + " => [", 0);
+            PrintTextAndNewLine(p->GetName() + " [", 0);
             for(int i = 0; i < 20; i++)
             {
                 if (i < life)

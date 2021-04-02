@@ -40,6 +40,8 @@ class BattleSystem
             AWAIT = 5
         };
 
+        int playerextraaction = 0;
+        int enemyextraaction = 0;
         int playeraction = 0;
         int enemyaction = 0;
         float multiply[20];
@@ -67,8 +69,10 @@ class BattleSystem
 
         void NextTurn()
         {
-            playeraction += 3 + (player->GetAgility() * 0.05);
-            enemyaction += 3 + (enemy->GetAgility() * 0.05);
+            playeraction += 3 + (player->GetAgility() * 0.05) + playerextraaction;
+            enemyaction += 3 + (enemy->GetAgility() * 0.05) + enemyextraaction;
+            playerextraaction = 0;
+            enemyextraaction = 0;
             turn++;
         }
 
@@ -204,6 +208,20 @@ class BattleSystem
         void UseItem()
         {
             attacker->SetDamage(-16);
+        }
+
+        void Await()
+        {
+            if (isPlayerTurn)
+            {
+                playerextraaction = playeraction;
+                playeraction = 0;
+            }
+            else
+            {
+                enemyextraaction = enemyaction;
+                enemyaction = 0;
+            }
         }
 
         list<Action> MappingActionsAvailable(list<Action> actions)

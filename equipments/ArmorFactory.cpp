@@ -12,14 +12,19 @@ map<Armor*, int> GetMapLightArmor()
     };
 }
 
-map<Armor*, int> GetMapHeavyArmor()
+map<int, Armor*> GetMapHeavyArmor()
 {
     return {
-        { new Armor("Elmo de ferro", EquipmentEnum::HEAD_ARMOR, 1, 1), 1 },
-        { new Armor("Cota de malha", EquipmentEnum::BODY_ARMOR, 1, 1), 2 },
-        { new Armor("Cota de malha inferior", EquipmentEnum::LEGS_ARMOR, 1, 1), 3 },
-        { new Armor("Luvas malha de ferro", EquipmentEnum::HANDS_ARMOR, 1, 1), 4 },
-        { new Armor("Ombreira de ferro", EquipmentEnum::ARMS_ARMOR, 1, 1), 5 },
-        { new Armor("Bota de ferro", EquipmentEnum::FOOTS_ARMOR, 1, 1), 6 }
+        { 1, new Armor("Elmo de ferro", EquipmentEnum::HEAD_ARMOR, 1, 1) },
+        { 2, new Armor("Cota de malha", EquipmentEnum::BODY_ARMOR, 1, 1) },
+        { 3, new Armor("Cota de malha inferior", EquipmentEnum::LEGS_ARMOR, 1, 1) },
+        { 4, new Armor("Luvas malha de ferro", EquipmentEnum::HANDS_ARMOR, 1, 1) },
+        { 5, new Armor("Ombreira de ferro", EquipmentEnum::ARMS_ARMOR, 1, 1) },
+        { 6, new Armor("Bota de ferro", EquipmentEnum::FOOTS_ARMOR, 1, 1) }
     };
+}
+
+Armor* ArmorFactory(int key)
+{
+    return GetMapHeavyArmor().find(key)->second;
 }

@@ -12,14 +12,14 @@ map<Sword*, int> GetMapOneHandedSword()
     };
 }
 
-map<Sword*, int> GetMapTwoHandedSword()
+map<int, Sword*> GetMapTwoHandedSword()
 {
     return {
-        { new Sword("Katana", EquipmentEnum::TWO_HANDED, 12, 8), 1 },
-        { new Sword("Espada Montante", EquipmentEnum::TWO_HANDED, 8, 12), 2 },
-        { new Sword("Espada Bastarda", EquipmentEnum::TWO_HANDED, 8, 12), 3 },
-        { new Sword("Espada do Carrasco", EquipmentEnum::TWO_HANDED, 6, 14), 4 },
-        { new Sword("Espada Draconica", EquipmentEnum::TWO_HANDED, 10, 16), 5 },
-        { new Sword("Espada Vampirica", EquipmentEnum::TWO_HANDED, 6, 10), 6 }
+        { 1, new Sword("Katana", EquipmentEnum::TWO_HANDED, 12, 8) },
+        { 2, new Sword("Espada Montante", EquipmentEnum::TWO_HANDED, 8, 12) },
+        { 3, new Sword("Espada Bastarda", EquipmentEnum::TWO_HANDED, 8, 12) },
+        { 4, new Sword("Espada do Carrasco", EquipmentEnum::TWO_HANDED, 6, 14) },
+        { 5, new Sword("Espada Draconica", EquipmentEnum::TWO_HANDED, 10, 16) },
+        { 6, new Sword("Espada Vampirica", EquipmentEnum::TWO_HANDED, 6, 10) }
     };
 }
