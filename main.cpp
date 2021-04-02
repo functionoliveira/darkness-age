@@ -3,12 +3,24 @@
 // #include "./PersonTest.cpp"
 #include <iostream>
 #include <string>
+#include <time.h>
 #include "BackgroundEnumerator.cpp"
 #include "RaceEnumerator.cpp"
 #include "Background.cpp"
 #include "Person.cpp"
-#include "Human.cpp"
-#include "Game.cpp"
+#include "./battle/Action.cpp"
+#include "./races/Human.cpp"
+#include "./races/Orc.cpp"
+#include "./races/Dwarf.cpp"
+#include "./races/Elf.cpp"
+#include "./races/Brocks.cpp"
+#include "./factories/PersonFactory.cpp"
+#include "./monsters/Wolf.cpp"
+#include "./factories/EnemyFactory.cpp"
+#include "./interface/Interface.cpp"
+#include "./interface/PersonInterface.cpp"
+#include "./interface/ArenaInterface.cpp"
+#include "./interface/GameInterface.cpp"
 #include <windows.h>
 #include <cwchar>
 // #include <future>
@@ -32,8 +44,8 @@ int main()
     cfi.FontWeight = FW_NORMAL;
     std::wcscpy(cfi.FaceName, L"Consolas"); // Choose your font
     SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
-
-    Game game;
+    srand (time(NULL));
+    GameInterface game;
     game.Run();
     // BackgroundTest bt;
     // bt.run();

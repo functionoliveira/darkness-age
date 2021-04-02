@@ -1,12 +1,18 @@
+#include <iostream>
+
 enum class RaceEnumerator
 {
     HUMAN = 1,
     ORC = 2,
     ELF = 3,
-    DWARF = 4
+    DWARF = 4,
+    BROCKS = 5,
+    WOLF = 6
 };
 
-std::string GetRaceEnumName(RaceEnumerator value)
+using namespace std;
+
+string GetRaceEnumName(RaceEnumerator value)
 {
     switch (value)
     {
@@ -14,6 +20,8 @@ std::string GetRaceEnumName(RaceEnumerator value)
         case RaceEnumerator::ORC: return "Orc";
         case RaceEnumerator::ELF: return "Elf";
         case RaceEnumerator::DWARF: return "Dwarf";
+        case RaceEnumerator::BROCKS: return "Brocks";
+        case RaceEnumerator::WOLF: return "Lobo";
         default: return "Unknown";
     }
 }

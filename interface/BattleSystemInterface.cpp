@@ -1,7 +1,20 @@
 #include <cmath>
+#include <iostream>
+#include <list>
+#include <map>
+#include "../battle/BattleSystem.cpp"
 
+using namespace std;
 class BattleSystemInterface : public Interface, public BattleSystem
 {
+    private:
+        list<Action> actions = {
+            Action(1, "Run", 3),
+            Action(2, "Atacar", 3),
+            Action(3, "Ataque especial", 3),
+            Action(4, "Usar Pocao", 2),
+            Action(5, "Esperar", 1),
+        };
     public:
         BattleSystemInterface(Person* p, Person* e) : BattleSystem(p, e) { }
 
@@ -61,38 +74,26 @@ class BattleSystemInterface : public Interface, public BattleSystem
 
         void MenuPlayerChoices()
         {
-            PrintTextAndNewLine("Suas opcoes sao:");
-            PrintTextAndNewLine("1 -> Correr", 0);
-            PrintTextAndNewLine("        ", 0);
-            PrintTextAndNewLine("2 -> Atacar", 0);
-            PrintTextAndNewLine("        ", 0);
-            PrintTextAndNewLine("3 -> Ataque Especial", 0);
-            PrintTextAndNewLine("        ", 0);
-            PrintTextAndNewLine("4 -> Usar Item", 0);
-            PrintTextAndNewLine("        ", 0);
-            PrintTextAndNewLine("5 -> Esperar");
-        }
-
-        void PrintLife(Person* p)
-        {
-            int life = ceil(p->GetHitpointsPercent() * 10);
-            PrintTextAndNewLine(p->GetName() + " => [", 0);
-            for(int i = 0; i < 10; i++)
-            {
-                if (i < life)
-                {
-                    PrintTextAndNewLine("#", 0);
-                }
-                else
-                {
-                    PrintTextAndNewLine(" ", 0);
-                }
-            }
-            PrintTextAndNewLine("]", 0);
+            list<Action> availables = MappingActionsAvailable(actions);
+            map<int, string> items;
+            // Mapping list of Action object to list of string
+            for(const Action &a : availables) { items.insert(make_pair(a.id, a.name)); }
+            BuildAndPrintMenu("Suas opcoes sao:", items, false);
+            NewLine();
         }
 
         void HandleAction(int option)
         {
+            int attack;
+            list<Action>::iterator it = actions.begin();
+            advance(it, option-1);
+            if(!HasPointsToDoAction(*it))
+            {
+                PrintTextAndNewLine("Sua tentativa foi muito demorada e seu adversario toma a iniciativa...");
+                RemoveActionPoint(3);
+                return;
+            }
+
             switch (static_cast<ActionType>(option))
             {
             case ActionType::RUN:
@@ -101,19 +102,24 @@ class BattleSystemInterface : public Interface, public BattleSystem
                 RemoveActionPoint(3);
                 break;
             case ActionType::ATTACK:
-                if (Attack() > 0)
+                attack = Attack();
+                if (attack > 0)
                 {
                     PrintTextAndNewLine(attacker->GetName() + " acertou o golpe!");
                 }
-                else
+                else if(attack == -1000)
                 {
                     PrintTextAndNewLine(attacker->GetName() + " errou o golpe!");
+                }
+                else
+                {
+                    PrintTextAndNewLine(attacker->GetName() + " acertou o golpe mas nao causou dano!");
                 }
                 RemoveActionPoint(3);
                 break;
             case ActionType::SPECIAL_ATTACK:
                 SpecialAttack();
-                PrintTextAndNewLine(attacker->GetName() + " dispara um ataque especial");
+                PrintTextAndNewLine(attacker->GetName() + " dispara um missel magico...");
                 RemoveActionPoint(3);
                 break;
             case ActionType::ITEM:
@@ -126,6 +132,7 @@ class BattleSystemInterface : public Interface, public BattleSystem
                 RemoveActionPoint(1);
                 break;
             default:
+                PrintTextAndNewLine(attacker->GetName() + " resolve esperar por seu adversario...");
                 break;
             }
         }

@@ -27,4 +27,26 @@ class Body
         float critical = 0;
         float criticaldamage = 1.5;
         int precision = 0;
+        int size = 1;
+
+        Shield* lefthandslot = NULL;
+        Weapon* righthandslot = NULL;
+        Armor* handsslot = NULL;
+        Armor* armsslot = NULL;
+        Armor* legsslot = NULL;
+        Armor* bodyslot = NULL;
+        Armor* headslot = NULL;
+        Armor* footsslot = NULL;
+
+        public:
+            void Equip(Weapon* equipment)
+            {
+                Unequip();
+                righthandslot = equipment;
+            }
+
+            void Unequip()
+            {
+                righthandslot = NULL;
+            }
 };

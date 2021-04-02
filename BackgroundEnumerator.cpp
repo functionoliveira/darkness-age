@@ -1,3 +1,5 @@
+#include <iostream>
+
 enum class BackgroundEnumerator
 {
     UNKNOW = 1,
@@ -11,7 +13,9 @@ enum class BackgroundEnumerator
     OCCULTIST = 9
 };
 
-std::string GetBackgroundEnumName(BackgroundEnumerator value)
+using namespace std;
+
+string GetBackgroundEnumName(BackgroundEnumerator value)
 {
     switch (value)
     {

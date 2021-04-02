@@ -3,7 +3,7 @@
 class Human : public Person
 {
     public:
-        Human(std::string n, RaceEnumerator r, BackgroundEnumerator f, BackgroundEnumerator c, BackgroundEnumerator y) : Person(n, r, f, c, y)
+        Human(std::string n, BackgroundEnumerator f, BackgroundEnumerator c, BackgroundEnumerator y) : Person(n, RaceEnumerator::HUMAN, f, c, y)
         {
             // Attributes Values
             vitality = 8;
@@ -27,8 +27,6 @@ class Human : public Person
             critical = 1;
             precision = 5;
 
-            UpdateAttributesFromFamily();
-            UpdateAttributesFromChildren();
-            UpdateAttributesFromYoung();
+            ApplyBackgroundBuffs();
         }
 };

@@ -2,7 +2,9 @@
 #include <iterator>
 #include <cmath>
 #include <iostream>
+#include <list>
 
+using namespace std;
 class BattleSystem
 {
     public:
@@ -40,6 +42,7 @@ class BattleSystem
 
         int playeraction = 0;
         int enemyaction = 0;
+        float multiply[20];
         Person* player;
         Person* enemy;
         Person* attacker;
@@ -53,9 +56,14 @@ class BattleSystem
             player = p;
             enemy = e;
             turn = 0;
+            multiply[0] = 0.0;
+            multiply[1] = 1.0;
+            multiply[19] = 5.0;
+            for (int i = 2; i < 19; i++)
+            {
+                multiply[i] = 1.1 + (i * 0.05);
+            }
         }
-
-        
 
         void NextTurn()
         {
@@ -82,33 +90,39 @@ class BattleSystem
 
         bool Dodge()
         {
-            int evasionbonus = rand() % 10;
-            int precisionbonus = rand() % 10;
-            float multiply[] = { 0.0, 1.6, 1.65, 1.7, 1.75, 1.8, 1.85, 1.9, 1.95, 2.0 };
-
-            int dodge = (defender->GetEvasion() * multiply[evasionbonus]) - (attacker->GetPrecision() * multiply[precisionbonus]);
-
-            return dodge > 0 ? true : false;
+            int evasionbonus = rand() % 20;
+            int precisionbonus = rand() % 20;
+            float dodge = (defender->GetEvasion() * multiply[evasionbonus]) - (attacker->GetPrecision() * multiply[precisionbonus]);
+            return dodge > 0.0 ? true : false;
         }
 
         int CalcDamage(AttackType attacktype)
         {
             switch (attacktype)
             {
+                float critical;
+                int dmg;
                 case AttackType::PHYSICAL:
-                    return attacker->GetPhysicaldamage() - (defender->GetArmor() * 0.6);
-                    break;
+                    critical = CalcCritical();
+                    dmg = ceil(attacker->GetPhysicaldamage() * critical);
+                    return dmg - (defender->GetArmor() * 0.6);
                 case AttackType::MAGIC:
-                    return attacker->GetMagicdamage();
-                    break;
+                    critical = CalcCritical();
+                    dmg = ceil(((6 * attacker->GetLevel()) + attacker->GetMagicdamage()) * critical);
+                    return dmg - (defender->GetArmor() * 0.2);
                 case AttackType::PSYCHIC:
                     return attacker->GetPsychicdamage();
                     break;
                 default:
                     return attacker->GetPhysicaldamage() - (defender->GetArmor() * 0.6);
                     break;
-            }
-            
+            }   
+        }
+
+        float CalcCritical()
+        {
+            float random = (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)) + 1.0;
+            return attacker->GetCritical() > random ? attacker->GetCriticaldamage() : 1;
         }
 
         void ApplyDamage(int damage)
@@ -131,13 +145,13 @@ class BattleSystem
 
         bool CheckIsPlayerAction()
         {
-            float playerinitiative = (rand() % 10);
-            float enemyinitiative = (rand() % 10);
+            int playerinitiative = (rand() % 20);
+            int enemyinitiative = (rand() % 20);
 
             if (enemyaction == playeraction)
             {
-                return (playerinitiative * player->GetAgility())
-                    >= (enemyinitiative * enemy->GetAgility());
+                return (playerinitiative + player->GetAgility())
+                    >= (enemyinitiative + enemy->GetAgility());
             } 
 
             return playeraction > enemyaction;
@@ -156,18 +170,16 @@ class BattleSystem
         }
 
         // ACTIONS HANDLERS
-        int Attack ()
+        int Attack()
         {
-            bool dodge = Dodge();
-
-            if (!dodge)
+            if (!Dodge())
             {
                 int damage = CalcDamage(AttackType::PHYSICAL);
                 ApplyDamage(damage);
                 return damage;
             }
 
-            return -1;
+            return -1000;
         }
 
         int SpecialAttack()
@@ -176,7 +188,7 @@ class BattleSystem
 
             if (!dodge)
             {
-                int damage = CalcDamage(AttackType::PHYSICAL);
+                int damage = CalcDamage(AttackType::MAGIC);
                 ApplyDamage(damage);
                 return damage;
             }
@@ -194,15 +206,38 @@ class BattleSystem
             attacker->SetDamage(-16);
         }
 
+        list<Action> MappingActionsAvailable(list<Action> actions)
+        {
+            int points = isPlayerTurn ? playeraction : enemyaction;
+            list<Action> mapped;
+            for(const Action action : actions)
+            {
+                if(points >= action.cost)
+                {
+                    mapped.push_back(action);
+                } 
+            }
+
+            return mapped;
+        }
+
+        bool HasPointsToDoAction(Action action)
+        {
+            int points = isPlayerTurn ? playeraction : enemyaction;
+            return action.cost <= points;
+        }
+
         void RemoveActionPoint(int value)
         {
             if (isPlayerTurn)
             {
                 playeraction -= value;
+                playeraction = playeraction < 0 ? 0 : playeraction;
             }
             else
             {
                 enemyaction -= value;
+                enemyaction = enemyaction < 0 ? 0 : enemyaction;
             }
         }
 };
