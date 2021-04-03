@@ -112,7 +112,7 @@ class BattleSystem
                     return dmg - (defender->GetArmor() * 0.6);
                 case AttackType::MAGIC:
                     critical = CalcCritical();
-                    dmg = ceil(((6 * attacker->GetLevel()) + attacker->GetMagicdamage()) * critical);
+                    dmg = ceil(((rand() % 8) + (2* attacker->GetLevel()) + attacker->GetMagicdamage()) * critical);
                     return dmg - (defender->GetArmor() * 0.2);
                 case AttackType::PSYCHIC:
                     return attacker->GetPsychicdamage();

@@ -162,6 +162,7 @@ class BattleSystemInterface : public Interface, public BattleSystem
             case ActionType::AWAIT:
                 actionoption = "aguardar";
                 action = "ele resolve esperar por seu adversario";
+                Await();
                 break;
             default:
                 actionoption = "aguardar";

@@ -1,14 +1,14 @@
 #include <map>
 
-map<Sword*, int> GetMapOneHandedSword()
+map<int, Sword*> GetMapOneHandedSword()
 {
     return {
-        { new Sword("Espada de Madeira", EquipmentEnum::ONE_HANDED, 2, 6), 1 },
-        { new Sword("Espada Simples", EquipmentEnum::ONE_HANDED, 2, 8), 2 },
-        { new Sword("Espada Templaria", EquipmentEnum::ONE_HANDED, 4, 8), 3 },
-        { new Sword("Espada Alfinete", EquipmentEnum::ONE_HANDED, 4, 8), 4 },
-        { new Sword("Espada Vorpal", EquipmentEnum::ONE_HANDED, 10, 16), 5 },
-        { new Sword("Espada Geada", EquipmentEnum::ONE_HANDED, 10, 16), 6 }
+        { 1, new Sword("Espada de Madeira", EquipmentEnum::ONE_HANDED, 2, 6) },
+        { 2, new Sword("Espada Simples", EquipmentEnum::ONE_HANDED, 2, 8) },
+        { 3, new Sword("Espada Templaria", EquipmentEnum::ONE_HANDED, 4, 8) },
+        { 4, new Sword("Espada Alfinete", EquipmentEnum::ONE_HANDED, 4, 8) },
+        { 5, new Sword("Espada Vorpal", EquipmentEnum::ONE_HANDED, 10, 16) },
+        { 6, new Sword("Espada Geada", EquipmentEnum::ONE_HANDED, 10, 16) }
     };
 }
 

@@ -55,8 +55,9 @@ class Interface
             cout << endl << "  ";
         }
 
-        void PrintTextAndNewLine(string text, int times = 1)
+        void PrintTextAndNewLine(string text, int times = 1, int textcolor=7)
         {
+            Color(textcolor);
             cout << text;
             for(int i = 0; i < times; i++)
             {

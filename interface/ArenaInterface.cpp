@@ -57,7 +57,7 @@ class ArenaInterface : Interface, public Arena
             NewLine();
             NewLine();
             PrintTextAndNewLine("ARENA DE BATALHA");
-            PrintTextAndNewLine("Seu openente sera um " + GetRaceEnumName(enemy->GetRace()));
+            PrintTextAndNewLine("Seu openente sera um " + GetRaceEnumName(enemy->GetRace()) + " level " + to_string(enemy->GetLevel()));
             Continue("A batalha ja vai comecar...");
             BattleSystemInterface battle = BattleSystemInterface(player, enemy);
             ClearScreen();
@@ -79,13 +79,21 @@ class ArenaInterface : Interface, public Arena
 
             if(battle.GetResult() == BattleSystem::BattleResult::Win)
             {
-                ClearScreen();
-                NewLine();
-                NewLine();
-                NewLine();
-                PrintTextAndNewLine("                     VITORIA");
-                Continue("Voce sai mais forte, descanse para a proxima batalha...");
                 Win();
+                ClearScreen();
+                NewLine(2);
+                PrintTextAndNewLine("VITORIA", 1, 2);
+                PrintTextAndNewLine("Voce se sente mais experiente apos a batalha.");
+                PrintTextAndNewLine("O chefe da arena vem lhe dar os parabens pelo");
+                PrintTextAndNewLine("excelente combate.");
+                if (reward)
+                {
+                    NewLine();
+                    PrintTextAndNewLine("Como recompensa ele te entrega um ", 0);
+                    PrintTextAndNewLine(reward->GetName(), 1, 2);
+                }
+                NewLine();
+                Continue("volte para o saguao e descanse para a proxima batalha... ");
             }
 
             if(battle.GetResult() == BattleSystem::BattleResult::Run)

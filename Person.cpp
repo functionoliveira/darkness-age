@@ -249,17 +249,22 @@ class Person : public Body, public Attributes, public Background
                     BuffIntelligence(2);
                     break;
                 case BackgroundEnumerator::GODLY:
-                    BuffIntelligence(1);
-                    BuffVitality(2);
+                    BuffIntelligence(2);
+                    BuffVitality(1);
                     BuffResistence(1);
                     break;
                 case BackgroundEnumerator::OCCULTIST:
                     BuffIntelligence(2);
                     BuffPsychic(1);
-                    BuffResistence(1);
+                    BuffAgility(1);
                     break;
                 default: "???";
             }
+        }
+
+        void SetLevel(int lvl)
+        {
+            level = lvl;
         }
 
         void SetDamage(int value)

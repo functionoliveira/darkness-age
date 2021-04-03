@@ -36,7 +36,7 @@ class YoungBackground
                 case BackgroundEnumerator::COMMONER: return "+2 dexterity and +2 luck";
                 case BackgroundEnumerator::MERCHANT: return "+2 luck and +2 intelligence";
                 case BackgroundEnumerator::GODLY: return "+1 intelligence, +2 vitality and +1 resistence";
-                case BackgroundEnumerator::OCCULTIST: return "+2 intelligence, +1 psychic, +1 resistence";
+                case BackgroundEnumerator::OCCULTIST: return "+2 intelligence, +1 psychic, +1 agility";
                 default: return "?????";
             }
         }

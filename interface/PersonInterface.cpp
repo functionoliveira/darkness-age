@@ -94,6 +94,15 @@ class PersonInterface : public Interface
         static void PrintPersonToken(Person* person)
         {
             Interface i;
+            int option;
+            map<int, string> tokemenu = {
+                { 1, "Sair" },
+                { 2, "Inventario" }
+            };
+            map<int, string> inventarymenu = {
+                { 1, "Sair" },
+                { 2, "Voltar" }
+            };
             i.NewLine();
             i.PrintTextAndNewLine("Nome: " + person->GetName(), 0);
             i.PrintTextAndNewLine("    Raca: " + GetRaceEnumName(person->GetRace()), 0);
@@ -140,8 +149,23 @@ class PersonInterface : public Interface
             i.PrintTextAndNewLine("\t\t\t\t\t", 0);
             i.PrintTextAndNewLine("Acerto: " + to_string(person->GetPrecision()));
             i.NewLine();
-            i.PrintTextAndNewLine("---------------------------------------------------------------");
-            i.Continue("Pressione qualquer tecla para sair...");
+            i.PrintTextAndNewLine("---------------------------------------------------------------", 0);
+            i.BuildAndPrintMenu("", tokemenu, false);
+            i.NewLine();
+            option = i.Continue("-> ");
+            if (option == 2)
+            {
+                i.ClearScreen();
+                PrintPersonInventory(person);
+                i.BuildAndPrintMenu("", inventarymenu, false);
+                i.NewLine();
+                option = i.Continue("-> ");
+                if (option == 2)
+                {
+                    i.ClearScreen();
+                    PersonInterface::PrintPersonToken(person);
+                }
+            }
         }
 
         static void PrintPersonInventory(Person* person)
